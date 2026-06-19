@@ -1515,3 +1515,406 @@ header.hero > * {
     justify-content: center;
   }
 }
+@media (max-width: 991px) {
+
+  /* --- Hero --- */
+  header.hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    padding: 100px 5vw 50px;
+    min-height: auto;
+  }
+
+  .hero__text {
+    grid-column: 1;
+    grid-row: 1;
+    padding-right: 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero__eyebrow {
+    justify-content: center;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  .hero__card-col {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-sm);
+  }
+
+  .hero__card {
+    flex: 1 1 280px;
+    max-width: 340px;
+  }
+
+  .hero__stats-bar {
+    grid-column: 1;
+    grid-row: 3;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+  }
+
+  /* --- Bento Grid tablette (6 colonnes) --- */
+  .bento-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .bento-1 { grid-column: 1 / 7; grid-row: 1; min-height: 260px; }
+  .bento-2 { grid-column: 1 / 4; grid-row: 2; }
+  .bento-3 { grid-column: 4 / 7; grid-row: 2; }
+  .bento-4 { grid-column: 1 / 4; grid-row: 3; }
+  .bento-5 { grid-column: 4 / 7; grid-row: 3; }
+  .bento-6 {
+    grid-column: 1 / 7;
+    grid-row: 4;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bento-steps {
+    justify-content: center;
+  }
+
+  /* --- Carousel tablette (2 cartes) --- */
+  .temo-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .temo-row .temo-card:last-child {
+    display: none;
+  }
+
+  /* --- Plans tarifaires --- */
+  .plans .row {
+    gap: var(--space-md);
+  }
+
+  /* --- Filtres --- */
+  .filtres select,
+  .filtres input {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  /* --- Contact --- */
+  .contact-principal .row {
+    flex-direction: column;
+  }
+
+  /* --- Équipe / Valeurs / Bureaux --- */
+  .equipe .row,
+  .valeurs .row,
+  .bureaux .row {
+    gap: var(--space-md);
+  }
+
+  /* --- Footer --- */
+  footer .row {
+    gap: var(--space-lg);
+  }
+}
+
+/* -------------------------------------------------------
+   MOBILE — max 575px
+   ------------------------------------------------------- */
+@media (max-width: 575px) {
+
+  /* Espacements globaux réduits */
+  :root {
+    --space-2xl: 3.5rem;
+    --space-xl:  2rem;
+    --space-lg:  1.75rem;
+  }
+
+  /* --- Navbar mobile --- */
+  .navbar-brand {
+    font-size: 1.3rem;
+  }
+
+  .navbar-collapse {
+    background: rgba(13,13,13,0.97);
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-md);
+    margin-top: var(--space-xs);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+  }
+
+  .nav-link {
+    padding: 0.65rem 0 !important;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-link.btn {
+    margin-top: var(--space-sm);
+    display: block;
+    text-align: center;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  /* --- Hero mobile --- */
+  header.hero {
+    padding: 90px 5vw 40px;
+    text-align: center;
+  }
+
+  .hero__heading {
+    font-size: clamp(2.2rem, 10vw, 3rem);
+  }
+
+  .hero__sub {
+    font-size: var(--fs-base);
+    text-align: left;
+  }
+
+  .hero__card-col {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .hero__stats-bar {
+    gap: var(--space-md);
+    justify-content: space-around;
+  }
+
+  .hero__stat-num {
+    font-size: 1.6rem;
+  }
+
+  /* --- Bento Grid mobile (1 colonne) --- */
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+
+  .bento-1, .bento-2, .bento-3,
+  .bento-4, .bento-5, .bento-6 {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .bento-1 { min-height: 220px; }
+
+  /* --- Catégories mobile (2 colonnes) --- */
+  .cat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+  }
+
+  .cat-icon  { font-size: 1.8rem; }
+  .cat-name  { font-size: 0.95rem; }
+
+  /* --- Carousel mobile (1 carte) --- */
+  .temo-row {
+    grid-template-columns: 1fr;
+  }
+
+  .temo-row .temo-card:not(:first-child) {
+    display: none;
+  }
+
+  .temo-card { margin: 0; }
+
+  /* --- Header pages intérieures --- */
+  main > header {
+    padding: 90px 5vw var(--space-lg);
+  }
+
+  main > header h1 {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+  }
+
+  /* --- Sections : padding latéral réduit --- */
+  .comment-ca-marche,
+  .categories,
+  .temoignages,
+  .chiffres,
+  .plans,
+  .comparatif,
+  .faq,
+  .filtres,
+  .liste-freelances,
+  .mission,
+  .valeurs,
+  .equipe,
+  .partenaires,
+  .contact-principal,
+  .bureaux {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
+  /* --- Chiffres clés --- */
+  .chiffres .row   { gap: var(--space-md); }
+  .chiffres strong { font-size: 2.2rem; }
+
+  /* --- Plans --- */
+  .plans article {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  /* --- Tableau comparatif : scroll horizontal --- */
+  .comparatif {
+    overflow-x: auto;
+  }
+
+  .comparatif table {
+    min-width: 500px;
+  }
+
+  /* --- Formulaire contact --- */
+  .contact-principal input,
+  .contact-principal select,
+  .contact-principal textarea {
+    font-size: var(--fs-base);
+  }
+
+  /* --- Liste freelances --- */
+  .liste-freelances .row {
+    gap: var(--space-md);
+  }
+
+  /* --- Footer --- */
+  footer .row {
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  footer .col {
+    text-align: center;
+  }
+
+  /* --- Témoignages header --- */
+  .temoignages-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  /* --- Carousel indicateurs --- */
+  #temoCarousel .carousel-indicators {
+    margin-top: var(--space-md);
+  }
+}
+
+/* -------------------------------------------------------
+   TRÈS PETIT MOBILE — max 400px (375px)
+   ------------------------------------------------------- */
+@media (max-width: 400px) {
+
+  /* Catégories : 1 seule colonne */
+  .cat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Titre hero encore plus compact */
+  .hero__heading {
+    font-size: 2rem;
+  }
+
+  /* Stats bar verticale */
+  .hero__stats-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+    text-align: center;
+  }
+
+  /* Étapes bento verticales */
+  .bento-steps {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Navbar brand encore plus petit */
+  .navbar-brand {
+    font-size: 1.15rem;
+  }
+
+  /* Boutons hero empilés */
+  .hero__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero__actions a,
+  .hero__actions button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* -------------------------------------------------------
+   DESKTOP LARGE — min 1400px
+   ------------------------------------------------------- */
+@media (min-width: 1400px) {
+
+  /* Catégories 4 colonnes fixes */
+  .cat-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Bento gap plus généreux */
+  .bento-grid {
+    gap: 1.4rem;
+  }
+
+  /* Titre hero encore plus grand */
+  .hero__heading {
+    font-size: 6rem;
+  }
+
+  /* Sections plus aérées */
+  .comment-ca-marche,
+  .categories,
+  .temoignages,
+  .chiffres,
+  .plans {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+}
+
+/* -------------------------------------------------------
+   IMPRESSION
+   ------------------------------------------------------- */
+@media print {
+
+  .navbar,
+  footer,
+  .hero__card-col,
+  .carousel-btn-wrap,
+  #backToTop,
+  .filtres button {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 12pt;
+  }
+
+  a { color: black; }
+
+  .bento-card,
+  .cat-card,
+  .temo-card,
+  .plans article {
+    border: 1px solid #ccc;
+    box-shadow: none;
+  }
+}
