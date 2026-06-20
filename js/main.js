@@ -250,3 +250,239 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounters();
   initFadeInSections();
 });
+ function initFiltrageFreelances() {
+  const selectCategorie = document.getElementById('filtre-categorie');
+  const selectPays      = document.getElementById('filtre-pays');
+  const inputBudget     = document.getElementById('filtre-budget');
+  const btnFiltrer      = document.getElementById('btn-filtrer');
+  const btnReset        = document.getElementById('btn-reinitialiser');
+  const liste           = document.getElementById('freelances-liste');
+  const titre           = document.getElementById('resultats-titre');
+  const aucunResultat    = document.getElementById('aucun-resultat');
+
+  if (!liste || !selectCategorie) return; // pas sur freelances.html
+
+  const cartes = Array.from(liste.querySelectorAll('article'));
+
+  function appliquerFiltres() {
+    const categorie = selectCategorie.value;
+    const pays = selectPays.value;
+    const budgetMax = inputBudget.value ? parseFloat(inputBudget.value) : null;
+
+    let visibles = 0;
+
+    cartes.forEach(carte => {
+      const carteCategorie = carte.dataset.categorie;
+      const cartePays = carte.dataset.pays;
+      const carteBudget = parseFloat(carte.dataset.budget);
+
+      const matchCategorie = !categorie || carteCategorie === categorie;
+      const matchPays = !pays || cartePays === pays;
+      const matchBudget = budgetMax === null || isNaN(budgetMax) || carteBudget <= budgetMax;
+
+      const estVisible = matchCategorie && matchPays && matchBudget;
+
+      if (estVisible) {
+        carte.style.display = '';
+        carte.classList.remove('carte-cachee');
+        visibles++;
+      } else {
+        carte.style.display = 'none';
+        carte.classList.add('carte-cachee');
+      }
+    });
+
+    if (titre) {
+      const pluriel = visibles > 1 ? 's' : '';
+      titre.textContent = `Résultats — ${visibles} freelance${pluriel} trouvé${pluriel}`;
+    }
+
+    if (aucunResultat) {
+      aucunResultat.hidden = visibles !== 0;
+    }
+  }
+
+  if (btnFiltrer) {
+    btnFiltrer.addEventListener('click', appliquerFiltres);
+  }
+
+  // Filtrage en temps réel
+  selectCategorie.addEventListener('change', appliquerFiltres);
+  selectPays.addEventListener('change', appliquerFiltres);
+  inputBudget.addEventListener('input', appliquerFiltres);
+
+  if (btnReset) {
+    btnReset.addEventListener('click', () => {
+      selectCategorie.value = '';
+      selectPays.value = '';
+      inputBudget.value = '';
+      appliquerFiltres();
+    });
+  }
+}
+
+/* -------------------------------------------------------
+   2. VALIDATION DU FORMULAIRE DE CONTACT
+   ------------------------------------------------------- */
+function initValidationFormulaire() {
+  const form = document.getElementById('contact-form');
+  if (!form) return; // pas sur contact.html
+
+  const champNom       = document.getElementById('nom');
+  const champEmail     = document.getElementById('email');
+  const champTelephone = document.getElementById('telephone');
+  const champSujet     = document.getElementById('sujet');
+  const champMessage   = document.getElementById('message');
+  const champRgpd      = document.getElementById('rgpd');
+  const successBox     = document.getElementById('form-success');
+
+  const MESSAGE_MIN_LENGTH = 20;
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const TEL_REGEX = /^[\d\s+\-().]{8,20}$/;
+
+  function afficherErreur(champId, message) {
+    const errorEl = document.getElementById(`error-${champId}`);
+    const inputEl = document.getElementById(champId);
+    if (errorEl) errorEl.textContent = message;
+    if (inputEl) inputEl.classList.add('input-error');
+  }
+
+  function effacerErreur(champId) {
+    const errorEl = document.getElementById(`error-${champId}`);
+    const inputEl = document.getElementById(champId);
+    if (errorEl) errorEl.textContent = '';
+    if (inputEl) inputEl.classList.remove('input-error');
+  }
+
+  function effacerToutesLesErreurs() {
+    ['nom', 'email', 'telephone', 'sujet', 'message', 'rgpd'].forEach(effacerErreur);
+  }
+
+  function validerFormulaire() {
+    effacerToutesLesErreurs();
+    let estValide = true;
+
+    // --- Nom ---
+    const nomValeur = champNom.value.trim();
+    if (nomValeur.length === 0) {
+      afficherErreur('nom', 'Le nom complet est requis.');
+      estValide = false;
+    } else if (nomValeur.length < 2) {
+      afficherErreur('nom', 'Le nom doit contenir au moins 2 caractères.');
+      estValide = false;
+    }
+
+    // --- Email (regex) ---
+    const emailValeur = champEmail.value.trim();
+    if (emailValeur.length === 0) {
+      afficherErreur('email', "L'adresse email est requise.");
+      estValide = false;
+    } else if (!EMAIL_REGEX.test(emailValeur)) {
+      afficherErreur('email', 'Veuillez saisir une adresse email valide (ex: nom@domaine.com).');
+      estValide = false;
+    }
+
+    // --- Téléphone (optionnel) ---
+    const telValeur = champTelephone.value.trim();
+    if (telValeur.length > 0 && !TEL_REGEX.test(telValeur)) {
+      afficherErreur('telephone', 'Veuillez saisir un numéro de téléphone valide.');
+      estValide = false;
+    }
+
+    // --- Sujet ---
+    if (champSujet.value === '') {
+      afficherErreur('sujet', 'Veuillez choisir un sujet.');
+      estValide = false;
+    }
+
+    // --- Message (min 20 caractères) ---
+    const messageValeur = champMessage.value.trim();
+    if (messageValeur.length === 0) {
+      afficherErreur('message', 'Le message est requis.');
+      estValide = false;
+    } else if (messageValeur.length < MESSAGE_MIN_LENGTH) {
+      afficherErreur(
+        'message',
+        `Le message doit contenir au moins ${MESSAGE_MIN_LENGTH} caractères (actuellement ${messageValeur.length}).`
+      );
+      estValide = false;
+    }
+
+    // --- RGPD ---
+    if (!champRgpd.checked) {
+      afficherErreur('rgpd', 'Vous devez accepter la politique de confidentialité.');
+      estValide = false;
+    }
+
+    return estValide;
+  }
+
+  // Validation en temps réel au blur
+  [champNom, champEmail, champTelephone, champSujet, champMessage].forEach(champ => {
+    champ.addEventListener('blur', () => {
+      const id = champ.id;
+      effacerErreur(id);
+
+      if (id === 'nom') {
+        const v = champ.value.trim();
+        if (v.length === 0) afficherErreur('nom', 'Le nom complet est requis.');
+        else if (v.length < 2) afficherErreur('nom', 'Le nom doit contenir au moins 2 caractères.');
+      }
+
+      if (id === 'email') {
+        const v = champ.value.trim();
+        if (v.length === 0) afficherErreur('email', "L'adresse email est requise.");
+        else if (!EMAIL_REGEX.test(v)) afficherErreur('email', 'Veuillez saisir une adresse email valide (ex: nom@domaine.com).');
+      }
+
+      if (id === 'telephone') {
+        const v = champ.value.trim();
+        if (v.length > 0 && !TEL_REGEX.test(v)) afficherErreur('telephone', 'Veuillez saisir un numéro de téléphone valide.');
+      }
+
+      if (id === 'sujet') {
+        if (champ.value === '') afficherErreur('sujet', 'Veuillez choisir un sujet.');
+      }
+
+      if (id === 'message') {
+        const v = champ.value.trim();
+        if (v.length === 0) afficherErreur('message', 'Le message est requis.');
+        else if (v.length < MESSAGE_MIN_LENGTH) {
+          afficherErreur('message', `Le message doit contenir au moins ${MESSAGE_MIN_LENGTH} caractères (actuellement ${v.length}).`);
+        }
+      }
+    });
+  });
+
+  // Soumission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    if (successBox) successBox.hidden = true;
+
+    const valide = validerFormulaire();
+
+    if (valide) {
+      if (successBox) {
+        successBox.hidden = false;
+        successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      form.reset();
+      effacerToutesLesErreurs();
+    } else {
+      const premiereErreur = form.querySelector('.input-error');
+      if (premiereErreur) {
+        premiereErreur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        premiereErreur.focus();
+      }
+    }
+  });
+}
+
+/* -------------------------------------------------------
+   3. INITIALISATION
+   ------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  initFiltrageFreelances();
+  initValidationFormulaire();
+});

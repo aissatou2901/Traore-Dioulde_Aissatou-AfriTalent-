@@ -2138,3 +2138,102 @@ body.light-mode #themeToggle:hover {
     transition: none !important;
   }
 }
+
+.btn-reset {
+  background: transparent;
+  color: rgba(245,240,232,0.7);
+  font-weight: 500;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.6rem 1.4rem;
+  cursor: pointer;
+  font-family: var(--font-body);
+  margin-left: var(--space-sm);
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-reset:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.aucun-resultat {
+  text-align: center;
+  color: rgba(245,240,232,0.55);
+  font-size: var(--fs-md);
+  padding: var(--space-xl) 0;
+}
+
+.liste-freelances article {
+  transition:
+    transform var(--transition-medium),
+    box-shadow var(--transition-medium),
+    opacity var(--transition-fast);
+}
+
+.liste-freelances article.carte-cachee {
+  display: none;
+}
+
+/* --- Validation formulaire --- */
+.form-group {
+  margin-bottom: var(--space-md);
+}
+
+.form-group--checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.form-group--checkbox label {
+  margin-bottom: 0;
+  font-weight: 400;
+  font-size: var(--fs-sm);
+}
+
+.form-group--checkbox input[type="checkbox"] {
+  width: auto;
+  margin-top: 0.2rem;
+  accent-color: var(--color-primary);
+}
+
+.error-msg {
+  display: block;
+  color: #F87171;
+  font-size: var(--fs-xs);
+  margin-top: 0.35rem;
+  min-height: 1.1em;
+}
+
+.input-error {
+  border-color: #F87171 !important;
+  background: rgba(248,113,113,0.05) !important;
+}
+
+.input-error:focus {
+  outline: none;
+  border-color: #F87171 !important;
+  box-shadow: 0 0 0 3px rgba(248,113,113,0.15);
+}
+
+.form-success {
+  background: rgba(52,211,153,0.12);
+  border: 1.5px solid rgba(52,211,153,0.4);
+  color: #34D399;
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  margin-bottom: var(--space-lg);
+  animation: slideInFade 0.4s ease;
+}
+
+@keyframes slideInFade {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .form-success { animation: none; }
+}

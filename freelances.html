@@ -43,37 +43,143 @@
     </header>
 
     <!-- FILTRES -->
-    <section class="filtres">
-      <div class="container">
-        <h2>Filtrer les résultats</h2>
-        <div>
-          <label for="categorie">Catégorie</label>
-          <select id="categorie">
-            <option value="">Toutes les catégories</option>
-            <option value="dev">Développement web</option>
-            <option value="design">Design graphique</option>
-            <option value="redaction">Rédaction</option>
-            <option value="marketing">Marketing digital</option>
-          </select>
-        </div>
-        <div>
-          <label for="pays">Pays</label>
-          <select id="pays">
-            <option value="">Tous les pays</option>
-            <option value="sn">Sénégal</option>
-            <option value="ci">Côte d'Ivoire</option>
-            <option value="gh">Ghana</option>
-            <option value="ma">Maroc</option>
-            <option value="ng">Nigeria</option>
-          </select>
-        </div>
-        <div>
-          <label for="budget">Budget max (€/heure)</label>
-          <input type="number" id="budget" placeholder="Ex: 50" />
-        </div>
-        <button type="button">Filtrer</button>
+   <section class="filtres">
+  <div class="container">
+    <h2>Filtrer les résultats</h2>
+    <div>
+      <label for="filtre-categorie">Catégorie</label>
+      <select id="filtre-categorie">
+        <option value="">Toutes les catégories</option>
+        <option value="dev">Développement web</option>
+        <option value="design">Design graphique</option>
+        <option value="redaction">Rédaction</option>
+        <option value="marketing">Marketing digital</option>
+        <option value="mobile">Développement mobile</option>
+        <option value="photo">Photo & Vidéo</option>
+      </select>
+    </div>
+    <div>
+      <label for="filtre-pays">Pays</label>
+      <select id="filtre-pays">
+        <option value="">Tous les pays</option>
+        <option value="senegal">Sénégal</option>
+        <option value="cote-ivoire">Côte d'Ivoire</option>
+        <option value="ghana">Ghana</option>
+        <option value="maroc">Maroc</option>
+        <option value="burkina-faso">Burkina Faso</option>
+      </select>
+    </div>
+    <div>
+      <label for="filtre-budget">Budget max (€/heure)</label>
+      <input type="number" id="filtre-budget" placeholder="Ex: 50" min="0" />
+    </div>
+    <button type="button" id="btn-filtrer">Filtrer</button>
+    <button type="button" id="btn-reinitialiser" class="btn-reset">Réinitialiser</button>
+  </div>
+</section>
+
+<!-- BLOC 2 : LISTE DES FREELANCES (section séparée, juste après) -->
+<section class="liste-freelances">
+  <div class="container">
+    <h2 id="resultats-titre">Résultats — 6 freelances trouvés</h2>
+    <div class="row" id="freelances-liste">
+
+      <article class="col" data-categorie="dev" data-pays="ghana" data-budget="35">
+        <img src="https://placehold.co/120x120?text=KD" alt="Photo de Kofi Danso" />
+        <h3>Kofi Danso</h3>
+        <p>Développeur Full-Stack</p>
+        <p>Accra, Ghana</p>
+        <p>Compétences : HTML, CSS, JavaScript, React, Node.js, MongoDB</p>
+        <p>Tarif : 35 € / heure</p>
+        <p>Note : 4,9/5 — 87 avis</p>
+        <p>"Passionné par le développement web, je crée des applications performantes et des interfaces intuitives depuis 6 ans."</p>
+        <a href="#">Voir le profil</a>
+      </article>
+
+      <article class="col" data-categorie="design" data-pays="senegal" data-budget="28">
+        <img src="https://placehold.co/120x120?text=AN" alt="Photo de Aïcha Ndiaye" />
+        <h3>Aïcha Ndiaye</h3>
+        <p>Designer UI/UX</p>
+        <p>Dakar, Sénégal</p>
+        <p>Compétences : Figma, Adobe XD, Illustrator, Photoshop, Sketch</p>
+        <p>Tarif : 28 € / heure</p>
+        <p>Note : 4,8/5 — 64 avis</p>
+        <p>"Je conçois des interfaces centrées sur l'utilisateur, alliant esthétique et fonctionnalité pour une expérience mémorable."</p>
+        <a href="#">Voir le profil</a>
+      </article>
+
+      <article class="col" data-categorie="redaction" data-pays="maroc" data-budget="20">
+        <img src="https://placehold.co/120x120?text=MB" alt="Photo de Mohamed Benali" />
+        <h3>Mohamed Benali</h3>
+        <p>Rédacteur & Traducteur</p>
+        <p>Casablanca, Maroc</p>
+        <p>Compétences : Rédaction web, SEO, Traduction FR/EN/AR, Copywriting</p>
+        <p>Tarif : 20 € / heure</p>
+        <p>Note : 4,7/5 — 112 avis</p>
+        <p>"Trilingue français-anglais-arabe, je rédige des contenus percutants optimisés pour le référencement naturel."</p>
+        <a href="#">Voir le profil</a>
+      </article>
+
+      <article class="col" data-categorie="marketing" data-pays="burkina-faso" data-budget="30">
+        <img src="https://placehold.co/120x120?text=FO" alt="Photo de Fatou Ouédraogo" />
+        <h3>Fatou Ouédraogo</h3>
+        <p>Experte Marketing Digital</p>
+        <p>Ouagadougou, Burkina Faso</p>
+        <p>Compétences : Google Ads, Facebook Ads, SEO, Analytics, Emailing</p>
+        <p>Tarif : 30 € / heure</p>
+        <p>Note : 4,9/5 — 53 avis</p>
+        <p>"Je développe des stratégies digitales sur mesure pour maximiser votre visibilité et votre retour sur investissement."</p>
+        <a href="#">Voir le profil</a>
+      </article>
+
+      <article class="col" data-categorie="mobile" data-pays="ghana" data-budget="40">
+        <img src="https://placehold.co/120x120?text=ST" alt="Photo de Samuel Tetteh" />
+        <h3>Samuel Tetteh</h3>
+        <p>Développeur Mobile</p>
+        <p>Kumasi, Ghana</p>
+        <p>Compétences : Flutter, React Native, Android, iOS, Firebase</p>
+        <p>Tarif : 40 € / heure</p>
+        <p>Note : 4,8/5 — 39 avis</p>
+        <p>"Spécialisé dans le développement d'applications mobiles cross-platform, je livre des apps fluides et bien testées."</p>
+        <a href="#">Voir le profil</a>
+      </article>
+
+      <article class="col" data-categorie="photo" data-pays="cote-ivoire" data-budget="25">
+        <img src="https://placehold.co/120x120?text=LK" alt="Photo de Layla Kamara" />
+        <h3>Layla Kamara</h3>
+        <p>Photographe & Vidéaste</p>
+        <p>Abidjan, Côte d'Ivoire</p>
+        <p>Compétences : Photographie, Montage vidéo, After Effects, Premiere Pro</p>
+        <p>Tarif : 25 € / heure</p>
+        <p>Note : 5,0/5 — 28 avis</p>
+        <p>"Je capture et raconte des histoires visuelles percutantes pour les marques et événements qui veulent se démarquer."</p>
+        <a href="#">Voir le profil</a>
+      </article>
+
+    </div>
+
+    <!-- Message affiché si aucun freelance ne correspond aux filtres -->
+    <p id="aucun-resultat" class="aucun-resultat" hidden>
+      Aucun freelance ne correspond à vos critères. Essayez d'élargir votre recherche.
+    </p>
+  </div>
+</section>
+    </div>
+    <div>
+      <label for="filtre-budget">Budget max (€/heure)</label>
+      <input type="number" id="filtre-budget" placeholder="Ex: 50" min="0" />
+    </div>
+    <button type="button" id="btn-filtrer">Filtrer</button>
+    <button type="button" id="btn-reinitialiser" class="btn-reset">Réinitialiser</button>
+  </div>
+   </div>
+
+        <!-- Message affiché si aucun freelance ne correspond aux filtres -->
+        <p id="aucun-resultat" class="aucun-resultat" hidden>
+          Aucun freelance ne correspond à vos critères. Essayez d'élargir votre recherche.
+        </p>
       </div>
-    </section>
+</section>
 
     <!-- LISTE FREELANCES -->
     <section class="liste-freelances">
