@@ -110,3 +110,143 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 })
+
+function animateCounter(el) {
+  const rawText = el.textContent.trim();
+
+  // Extraire la partie numérique et le suffixe (+, %, etc.)
+  const match = rawText.match(/^([\d\s]+)([^\d\s]*)$/);
+  if (!match) return; // format non reconnu (ex: décimal géré ailleurs)
+
+  const numericPart = match[1].replace(/\s/g, '');
+  const suffix = match[2] || '';
+  const target = parseInt(numericPart, 10);
+
+  if (isNaN(target)) return;
+
+  const duration = 1800; // ms
+  const startTime = performance.now();
+
+  function formatNumber(num) {
+    return num.toLocaleString('fr-FR');
+  }
+
+  function tick(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    // Easing "ease-out" pour ralentir en fin de course
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const currentValue = Math.floor(eased * target);
+
+    el.textContent = formatNumber(currentValue) + suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = formatNumber(target) + suffix;
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+/**
+ * Gère les compteurs au format décimal type "4,9 ★" ou "4,9%"
+ */
+function animateDecimalCounter(el) {
+  const rawText = el.textContent.trim();
+  const match = rawText.match(/^(\d+),(\d+)(.*)$/);
+  if (!match) return;
+
+  const intPart = parseInt(match[1], 10);
+  const decPart = match[2];
+  const suffix = match[3] || '';
+  const target = parseFloat(`${intPart}.${decPart}`);
+
+  const duration = 1800;
+  const startTime = performance.now();
+
+  function tick(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const currentValue = (eased * target).toFixed(decPart.length);
+
+    el.textContent = currentValue.replace('.', ',') + suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      el.textContent = target.toFixed(decPart.length).replace('.', ',') + suffix;
+    }
+  }
+
+  requestAnimationFrame(tick);
+}
+
+function initCounters() {
+  const counterSelectors = [
+    '.hero__stat-num',
+    '.chiffres strong'
+  ];
+
+  const counterEls = document.querySelectorAll(counterSelectors.join(', '));
+  if (counterEls.length === 0) return;
+
+  const counterObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+
+        if (el.dataset.counted === 'true') return;
+        el.dataset.counted = 'true';
+
+        const text = el.textContent.trim();
+
+        if (/^\d+,\d+/.test(text)) {
+          animateDecimalCounter(el);
+        } else {
+          animateCounter(el);
+        }
+
+        observer.unobserve(el);
+      }
+    });
+  }, {
+    threshold: 0.4,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  counterEls.forEach(el => counterObserver.observe(el));
+}
+
+/* -------------------------------------------------------
+   2. FADE-IN DES SECTIONS AU SCROLL
+   ------------------------------------------------------- */
+function initFadeInSections() {
+  const fadeEls = document.querySelectorAll('.fade-in-section');
+  if (fadeEls.length === 0) return;
+
+  const fadeObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -60px 0px'
+  });
+
+  fadeEls.forEach(el => fadeObserver.observe(el));
+}
+
+/* -------------------------------------------------------
+   3. INITIALISATION
+   ------------------------------------------------------- */
+document.addEventListener('DOMContentLoaded', () => {
+  initCounters();
+  initFadeInSections();
+});
